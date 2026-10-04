@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일본 배대지 쿠로로지 (KURO Logi)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ==================================================================
+     긴급 안내 팝업
+     ================================================================== -->
+<div class="popup" id="emergencyPopup">
+  <div class="popup__backdrop" data-close-popup></div>
+  <div class="popup__panel" role="dialog" aria-label="긴급 안내">
+    <div class="popup__body">
+      <p class="popup__label">! 긴급 안내</p>
+      <h2 class="popup__title">
+        스마트스토어<br><span class="text-red">택배사 설정 변경</span> 부탁드립니다!
+      </h2>
+      <p class="popup__lead">
+        최근 통관사 변경후, <strong>스마트스토어의 트래킹이 되지 않은</strong><br>문제가 발생하고 있습니다.
+      </p>
+
+      <div class="compare">
+        <div class="compare__item compare__item--before">
+          <span class="compare__head">변경 전 (현재 설정)</span>
+          <span class="compare__name">롯데글로벌로지스</span>
+        </div>
+        <span class="compare__arrow" aria-hidden="true">➜</span>
+        <div class="compare__item compare__item--after">
+          <span class="compare__head">변경 후 (설정 부탁)</span>
+          <span class="compare__name">CJ대한통운</span>
+        </div>
+      </div>
+
+      <p class="popup__note">
+        <span class="popup__note-mark">!</span>
+        금일부터 연휴로 스마트스토어 측에서 대응이 안되고 있는 상황입니다.<br>
+        <strong class="text-red">연휴 끝나는 대로 빠르게 개선하겠습니다.</strong>
+      </p>
+
+      <a class="btn btn--primary" href="#">자세히 보기 ›</a>
+    </div>
+    <div class="popup__foot">
+      <label class="popup__mute"><input type="checkbox"> 일주일동안 보이지 않음</label>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================================
+     상단 바
+     ================================================================== -->
+<div class="topbar">
+  <div class="container topbar__inner">
+
+    <ul class="topbar__links topbar__links--left">
+      <li><a href="#">즐겨찾기추가</a></li>
+      <li><a href="#">1:1게시판</a></li>
+      <li class="has-menu">
+        <a href="#">나의 일본주소 <i class="caret">▾</i></a>
+        <div class="address-menu">
+          <p class="address-menu__title">배송센터 안내</p>
+          <table class="table table--striped">
+            <colgroup><col style="width:130px"><col></colgroup>
+            <tbody>
+              <tr>
+                <th>배송센터</th>
+                <td>
+                  <select class="field field--sm" aria-label="배송센터">
+                    <option>항공-도쿄(JP)</option>
+                    <option>해상-후쿠오카 제1센터(JP)</option>
+                    <option>해상-후쿠오카 제2센터(JP)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr><th>우편번호</th><td>187-0011</td></tr>
+              <tr><th>주소</th><td>東京都小平市鈴木町1-466-19-3F</td></tr>
+              <tr><th>나의 사서함번호</th><td class="text-blue text-bold">로그인후 확인 가능합니다.</td></tr>
+              <tr><th>Telephone</th><td>042-401-0754</td></tr>
+              <tr><th>수취인</th><td>회원님 영문 성함(또는 회원사명)</td></tr>
+            </tbody>
+          </table>
+          <p class="alert">
+            주의사항<br>
+            - 원활한 배송을 위해서 위의 모든 정보를 정확히 기입바랍니다.<br>
+            - 주소 기입시 [주소+나의사서함번호]를 반드시 기입해주세요. 입고시 「나의사서함 번호」로 회원님의 화물을 식별합니다.<br>
+            - 수취인은 한글 사용 불가 (영문, 한자 사용 바랍니다)
+          </p>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="topbar__links topbar__links--right">
+      <li><a href="#">언어 선택 <i class="caret">▾</i></a></li>
+      <li><a class="kakao-btn" href="#"><img src="images/air_kakao.png" alt="카톡상담"></a></li>
+      <li><a class="kakao-btn" href="#"><img src="images/kakao_sea1.png" alt="카톡상담"></a></li>
+      <li><a class="kakao-btn" href="#"><img src="images/kakao_sea2.png" alt="카톡상담"></a></li>
+      <li><a href="#loginForm">로그인</a></li>
+      <li><a href="#">회원가입</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<!-- ==================================================================
+     헤더 + 주 메뉴
+     ================================================================== -->
+<header class="site-header">
+  <div class="container site-header__inner">
+
+    <a class="site-header__logo" href="./">
+      <img src="images/logo.png" alt="Kuro Logi 물류시스템">
+    </a>
+
+    <nav class="main-nav">
+      <ul class="main-nav__list">
+        <li class="main-nav__item">
+          <a href="서비스안내/info_company.html">서비스안내</a>
+          <ul class="main-nav__submenu">
+            <li><a href="서비스안내/info_company.html">KURO Logi 소개</a></li>
+            <li><a href="서비스안내/info_grade.html">회원등급, 수수료 안내</a></li>
+            <li><a href="서비스안내/weightchart2.html">국제배송비 안내</a></li>
+            <li><a href="서비스안내/info_regulation.html">검수규정,보상규정</a></li>
+            <li><a href="서비스안내/clearance_policy.html">통관불가 품목</a></li>
+            <li><a href="서비스안내/listpass_help.html">목록통관 품목안내</a></li>
+            <li><a href="서비스안내/manual.html">KURO 사용메뉴얼</a></li>
+          </ul>
+        </li>
+        <li class="main-nav__item">
+          <a href="종합현황/dashboard.html">종합현황</a>
+          <ul class="main-nav__submenu">
+            <li><a href="종합현황/dashboard.html">종합현황</a></li>
+            <li><a href="종합현황/tracking.html">트레킹입력</a></li>
+            <li><a href="종합현황/nodata.html">노데이터 확인</a></li>
+            <li><a href="종합현황/storage.html">보관현황</a></li>
+          </ul>
+        </li>
+        <li class="main-nav__item">
+          <a href="마이페이지/mypage.html">마이페이지</a>
+        </li>
+        <li class="main-nav__item">
+          <a href="구매대행/order_form.html">구매대행</a>
+          <ul class="main-nav__submenu">
+            <li><a href="구매대행/order_form.html">주문서등록</a></li>
+            <li><a href="구매대행/stock_order.html">재고구매신청등록</a></li>
+            <li><a href="구매대행/excel_upload.html">구매대행 엑셀등록</a></li>
+          </ul>
+        </li>
+        <li class="main-nav__item">
+          <a href="배송대행/order_form.html">배송대행</a>
+          <ul class="main-nav__submenu">
+            <li><a href="배송대행/order_form.html">주문서등록</a></li>
+            <li><a href="배송대행/excel_upload.html">배송대행 엑셀등록</a></li>
+          </ul>
+        </li>
+        <li class="main-nav__item">
+          <a href="커뮤니티/notice.html">커뮤니티</a>
+          <ul class="main-nav__submenu">
+            <li><a href="커뮤니티/notice.html">공지사항</a></li>
+            <li><a href="커뮤니티/qna.html">1:1게시판</a></li>
+            <li><a href="커뮤니티/message.html">알림메세지</a></li>
+            <li><a href="커뮤니티/deals.html">특가제품안내</a></li>
+            <li><a href="커뮤니티/faq.html">자주묻는 질문</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+
+  </div>
+</header>
+
+<main>
+
+  <!-- ================================================================
+       1) 배너 슬라이더 + 로그인 / 배송센터
+       ================================================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--two-thirds">
+          <div class="hero">
+            <a class="hero__link" href="#" aria-label="배너 자세히 보기"></a>
+            <button class="hero__arrow hero__arrow--prev" type="button" aria-label="이전">‹</button>
+            <button class="hero__arrow hero__arrow--next" type="button" aria-label="다음">›</button>
+            <div class="hero__dots">
+              <span class="is-active"></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col--one-third">
+
+          <!-- 로그인 -->
+          <div class="card">
+            <div class="card__body">
+              <form id="loginForm" onsubmit="return false">
+                <input class="field field--block" type="text" maxlength="20" placeholder="ID" aria-label="ID">
+                <input class="field field--block" type="password" maxlength="30" placeholder="PASSWORD" aria-label="PASSWORD">
+                <button class="btn btn--primary btn--block" type="submit">로그인</button>
+                <label class="checkbox"><input type="checkbox" tabindex="-1"> 아이디저장</label>
+                <div class="btn-row btn-row--split">
+                  <a class="btn btn--dark" href="#">회원가입</a>
+                  <a class="btn btn--dark" href="#">ID/PW 찾기</a>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 배송센터 안내 탭 -->
+          <div class="tabs">
+            <ul class="tabs__nav">
+              <li class="tabs__item is-active" data-pane="center-air"><a href="#">항공-도쿄(JP)</a></li>
+              <li class="tabs__item" data-pane="center-sea1"><a href="#">해상-후쿠오카 제1센터(JP)</a></li>
+              <li class="tabs__item" data-pane="center-sea2"><a href="#">해상-후쿠오카 제2센터(JP)</a></li>
+            </ul>
+
+            <div class="tabs__pane is-active" id="center-air">
+              <table class="table">
+                <tbody>
+                  <tr><th>주소</th><td>東京都小平市鈴木町1-466-19-3F</td></tr>
+                  <tr><th>사서함번호</th><td>로그인후 확인 가능합니다.</td></tr>
+                  <tr><th>우편번호</th><td>187-0011</td></tr>
+                  <tr><th>전화번호</th><td>042-401-0754</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tabs__pane" id="center-sea1">
+              <table class="table">
+                <tbody>
+                  <tr><th>주소</th><td>福岡県 福岡市 博多区 昭南町 2-3-8-3F</td></tr>
+                  <tr><th>사서함번호</th><td>로그인후 확인 가능합니다.</td></tr>
+                  <tr><th>우편번호</th><td>812-0876</td></tr>
+                  <tr><th>전화번호</th><td>070-9293-9189</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tabs__pane" id="center-sea2">
+              <table class="table">
+                <tbody>
+                  <tr><th>주소</th><td>福岡県糟屋郡粕屋町仲原２７７４−６ KURO</td></tr>
+                  <tr><th>사서함번호</th><td>로그인후 확인 가능합니다.</td></tr>
+                  <tr><th>우편번호</th><td>811-2304</td></tr>
+                  <tr><th>전화번호</th><td>070-9285-4145</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="btn-row btn-row--split btn-row--spaced">
+            <a class="btn btn--dark" href="#">배송대행 신청</a>
+            <a class="btn btn--dark" href="#">구매대행 신청</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       2) 운송장 조회
+       ================================================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--half">
+          <h4 class="panel-title panel-title--line">한국 운송장조회</h4>
+          <div class="card card--blue">
+            <div class="card__body">
+              <div class="search-bar">
+                <a class="btn btn--dark btn--lg" href="#">한국</a>
+                <select class="field field--lg" aria-label="배송방법">
+                  <option value="AIR">도쿄에어</option>
+                  <option value="SEA">후쿠오카 고속해상</option>
+                </select>
+                <input class="field field--lg" type="text" placeholder="운송장번호 입력" aria-label="운송장번호">
+                <a class="btn btn--dark btn--lg" href="#">검색</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col--half">
+          <h4 class="panel-title panel-title--line">일본 운송장조회</h4>
+          <div class="card card--yellow">
+            <div class="card__body">
+              <div class="search-bar">
+                <a class="btn btn--dark btn--lg" href="#">일본</a>
+                <select class="field field--lg" aria-label="택배사">
+                  <option value="YAMATO" selected>야마토</option>
+                  <option value="SAGAWA">사가와</option>
+                  <option value="AMAZON">Amazon</option>
+                  <option value="JAPANPOST">우체국</option>
+                  <option value="SEINO">세이노</option>
+                  <option value="FUKUTSU">후쿠야마</option>
+                  <option value="LASTONE">라스트원</option>
+                  <option value="MEITETSU">메이테츠</option>
+                </select>
+                <input class="field field--lg" type="text" placeholder="트레킹넘버 입력" aria-label="운송장번호">
+                <a class="btn btn--dark btn--lg" href="#">검색</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       3) 공지사항 / 센터 현황 / 자동편집기
+       ================================================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">
+            공지사항
+            <a class="panel-title__more" href="#">더보기 +</a>
+          </h4>
+          <div class="card card--pad">
+            <ul class="notice-list">
+              <li class="notice-list__item">
+                <p class="notice-list__title">
+                  <span class="badge badge--info">새글</span>&nbsp;&nbsp;<a href="#">[긴급!] 스마트스토어 발송처리시 -&gt; CJ대한통운 임시 설정 부탁! </a>
+                </p>
+                <span class="badge badge--date">2026-10-03</span>
+              </li>
+              <li class="notice-list__item">
+                <p class="notice-list__title"><a href="#">[중요!!] 해상 대형화물 옵션 수수료 차감 안내</a></p>
+                <span class="badge badge--date">2026-10-01</span>
+              </li>
+              <li class="notice-list__item">
+                <p class="notice-list__title"><a href="#">[중요!] 항공 통관시스템 변경에 따른 오픈마켓 택배사 선택 변경요</a></p>
+                <span class="badge badge--date">2026-09-24</span>
+              </li>
+              <li class="notice-list__item">
+                <p class="notice-list__title"><a href="#">[중요!] 해상 리드타임 단축 &amp; 재고 보관비무료 이벤트!</a></p>
+                <span class="badge badge--date">2026-09-21</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">센터별 현재 출고상황</h4>
+          <div class="card card--pad">
+            <table class="center-status">
+              <tbody>
+                <tr>
+                  <td class="center-status__cell"><img src="images/center_air.png" alt="항공-도쿄"></td>
+                  <td class="center-status__cell"><img src="images/center_sea1.png" alt="해상-후쿠오카 제1센터"></td>
+                  <td class="center-status__cell center-status__cell--last"><img src="images/center_sea2.png" alt="해상-후쿠오카 제2센터"></td>
+                </tr>
+                <tr>
+                  <td class="center-status__cell center-status__name">항공-도쿄(JP)</td>
+                  <td class="center-status__cell center-status__name">해상-후쿠오카 제1센터(JP)</td>
+                  <td class="center-status__cell center-status__cell--last center-status__name">해상-후쿠오카 제2센터(JP)</td>
+                </tr>
+                <tr>
+                  <td class="center-status__cell"><img class="center-status__status" src="images/status_outday.png" alt="당일 입고분 출고중"></td>
+                  <td class="center-status__cell"><img class="center-status__status" src="images/status_outday.png" alt="당일 입고분 출고중"></td>
+                  <td class="center-status__cell center-status__cell--last"><img class="center-status__status" src="images/status_outday.png" alt="당일 입고분 출고중"></td>
+                </tr>
+                <tr>
+                  <td class="center-status__cell">당일 입고분 출고중</td>
+                  <td class="center-status__cell">당일 입고분 출고중</td>
+                  <td class="center-status__cell center-status__cell--last">당일 입고분 출고중</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">신청서 자동편집기</h4>
+          <div class="card">
+            <a class="card__image-link" href="#">
+              <img class="card__image" src="images/editor.png" alt="신청서 자동편집기">
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       4) 고객센터 / 환율정보 / 계좌정보
+       ================================================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">고객센터</h4>
+          <div class="card card--pad">
+            <div class="card__body">
+              <p class="text-18">Tel : <span class="text-blue text-18">(+81) 042-401-0754 / 일본</span></p>
+              <p class="text-16">평일 9:30~17:30</p>
+              <p class="text-16 text-red text-semibold">일요일휴무, 토요일/공휴일 정상근무(일본기준)</p>
+              <p class="text-16">email : support@kurologi.jp</p>
+
+              <div class="stack">
+                <a class="btn btn--dark" href="#">자주묻는질문</a>
+                <a class="btn btn--dark" href="#">사용메뉴얼</a>
+              </div>
+
+              <div class="stack stack--tight">
+                <a class="kakao-btn" href="#"><img src="images/air_kakao.png" alt="카톡상담"></a>
+                <a class="kakao-btn" href="#"><img src="images/kakao_sea1.png" alt="카톡상담"></a>
+                <a class="kakao-btn" href="#"><img src="images/kakao_sea2.png" alt="카톡상담"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">환율정보(100엔)</h4>
+          <div class="card card--pad">
+            <div class="card__body text-center">
+              <p class="text-15">환율 기준일 :  2026.10.03</p>
+              <p class="exchange exchange--main">
+                <img class="exchange__flag" src="images/flag_jp.png" alt="JP"> 고시환율(원)<span class="exchange__value text-red">876.31</span>
+              </p>
+              <p class="exchange text-16">기준환율(원)<span class="exchange__value text-blue">854.58</span></p>
+              <p class="exchange text-16">송금환율(원)<span class="exchange__value text-blue">862.95</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col--one-third">
+          <h4 class="panel-title panel-title--line">계좌정보</h4>
+          <div class="card card--pad">
+            <div class="card__body">
+              <p class="text-16 bank-logo"><img src="images/img_bank.png" alt="SBI SUMISHIN NET BANK"></p>
+              <p class="text-16">SBI SUMISHIN NET BANK, LTD.</p>
+              <p class="text-16">예금주명: USPbrain Co., Ltd</p>
+              <p class="text-20 text-blue">1537388 (JAPANESE YEN)/NTSSJPJT</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================================================================
+     푸터
+     ================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="row">
+
+      <div class="col col--footer-logo">
+        <img class="site-footer__logo" src="images/logo.png" alt="Kuro Logi 물류시스템">
+      </div>
+
+      <div class="col col--footer-info">
+        <div class="footer-links">
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="#">이메일무단수집거부</a>
+          <a href="#">特定商取引法に基づく表示</a>
+          <a href="#">個人情報保護方針</a>
+        </div>
+        <p class="site-footer__text">
+          KURO Logi ( USPbrain Co., Ltd ) / WTKOREA <br>
+          3F, 1-466-19,  Suzukicho, Kodaira Shi, Tokyo To, 187-0011, Japan<br>
+          Tel(일본) : (+81) 042-401-0754<br><br>
+          Kuro Logi 물류시스템 에서 운영하는 배송대행은 관세법등 관련규정을 준수합니다.
+          불법물건을 취급하지 않으며, 분할배송 및 가격허위신고 등 고객의 불법사항 요청에는<br>
+          협조하지 않습니다. 고객님의 허위신고로 인한 불이익에는 책임지지 않습니다.
+        </p>
+      </div>
+
+    </div>
+  </div>
+  <p class="copyright">ⓒ 2023 All Rights Reserved by KUROLogi.</p>
+</footer>
+
+<script>
+(function () {
+  /* ---- 배송센터 탭 ---- */
+  var tabItems = document.querySelectorAll('.tabs__item');
+  tabItems.forEach(function (item) {
+    item.querySelector('a').addEventListener('click', function (e) {
+      e.preventDefault();
+      tabItems.forEach(function (other) { other.classList.remove('is-active'); });
+      item.classList.add('is-active');
+      document.querySelectorAll('.tabs__pane').forEach(function (pane) {
+        pane.classList.toggle('is-active', pane.id === item.dataset.pane);
+      });
+    });
+  });
+
+  /* ---- 팝업 ---- */
+  var popup = document.getElementById('emergencyPopup');
+  document.querySelectorAll('[data-close-popup]').forEach(function (el) {
+    el.addEventListener('click', function () { popup.classList.add('is-hidden'); });
+  });
+  popup.querySelector('.popup__mute input').addEventListener('change', function (e) {
+    if (e.target.checked) popup.classList.add('is-hidden');
+  });
+})();
+</script>
+</body>
+</html>

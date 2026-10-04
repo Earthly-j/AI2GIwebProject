@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><body style="margin:0;font:13px sans-serif">
+<p id="out">running…</p>
+<script>
+const PAGES = [
+  'index.html',
+  '종합현황/dashboard.html',
+  '종합현황/nodata.html',
+  '서비스안내/info_company.html',
+  '서비스안내/info_grade.html',
+  '서비스안내/weightchart2.html',
+  '서비스안내/info_regulation.html',
+  '서비스안내/listpass_help.html',
+  '배송대행/order_form.html',
+  '배송대행/excel_upload.html',
+  '구매대행/order_form.html',
+  '구매대행/excel_upload.html',
+];
+const results = [];
+async function run(){
+  for(const p of PAGES){
+    const html = await (await fetch(p)).text();
+    // every in-page anchor target inside the nav
+    const nav = html.slice(html.indexOf('<nav'), html.indexOf('</nav>'));
+    const links = [...nav.matchAll(/<li><a href="([^"]+)">([^<]+)<\/a><\/li>/g)];
+    const real = links.filter(m=>m[1] !== '#');
+    let ok = 0, fail = [];
+    for(const [, href, label] of real){
+      const base = location.href.replace(/\/[^/]*$/, '/');
+      const url = new URL(href, base + (p.includes('/') ? p.split('/')[0] + '/' : ''));
+      try {
+        const r = await fetch(url.href);
+        if(r.ok) ok++; else fail.push(label+' ('+r.status+')');
+      } catch(e) { fail.push(label+' ('+e.message.slice(0,20)+')'); }
+    }
+    results.push(p.padEnd(32) + ' nav links=' + real.length + ' reachable=' + ok + (fail.length ? '  FAIL: '+fail.join(', ') : ''));
+  }
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = 'done';
+}
+run();
+</script></body></html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><body style="margin:0">
+<iframe id="f" src="../종합현황/dashboard.html" style="width:1440px;height:600px;border:0"></iframe>
+<script>
+const f=document.getElementById('f');
+f.onload=function(){
+  const d=f.contentDocument;
+  // force the 3rd item (구매대행) submenu open to prove the CSS works
+  const items=d.querySelectorAll('.main-nav__item');
+  const out=[];
+  items.forEach((it,i)=>{
+    const a=it.querySelector(':scope > a');
+    const sub=it.querySelector('.main-nav__submenu');
+    out.push(i+' '+a.textContent.trim()+'  sub='+(sub?sub.querySelectorAll('li').length:'0'));
+  });
+  // simulate hover by injecting a style that shows all submenus
+  const st=d.createElement('style');
+  st.textContent='.main-nav__item:hover .main-nav__submenu,.main-nav__submenu{display:block !important;}';
+  d.head.appendChild(st);
+  d.querySelectorAll('.main-nav__submenu').forEach((s,i)=>{ if(i!==2) s.style.display='none'; });
+  document.title='done';
+  document.body.insertAdjacentHTML('beforeend','<pre id=o>'+out.join('\n')+'</pre>');
+};
+</script></body></html>

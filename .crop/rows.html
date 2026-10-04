@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><body style="margin:0;background:#fff">
+<canvas id="c" width="1440" height="1250"></canvas>
+<script>
+const img=new Image();
+img.onload=function(){
+  const c=document.getElementById('c'),x=c.getContext('2d');
+  x.drawImage(img,0,0);
+  const W=1440,d=x.getImageData(0,0,W,1250).data;
+  const hex=(px,py)=>{const i=(py*W+px)*4;return '#'+[d[i],d[i+1],d[i+2]].map(v=>v.toString(16).padStart(2,'0')).join('');};
+  const out=[];
+  for(let y=190;y<=420;y+=6){
+    out.push('y='+String(y).padStart(4)+'  x=60:'+hex(60,y)+'  x=250:'+hex(250,y)+'  x=380:'+hex(380,y)+'  x=520:'+hex(520,y));
+  }
+  document.body.insertAdjacentHTML('beforeend','<pre id=o>'+out.join('\n')+'</pre>');
+};
+img.src='shot_nodata2.png';
+</script></body></html>
