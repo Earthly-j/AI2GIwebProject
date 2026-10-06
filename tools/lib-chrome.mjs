@@ -49,9 +49,11 @@ export const EXTRA_VARS = `:root {
 export function head({ title, css, depth = 1, current = null, crumb = null }) {
   const p = depth > 0 ? '../' : '';
 
+  // Crumb hrefs are written relative to the page's own folder (e.g.
+  // 'dashboard.html'), so they must NOT get the depth prefix.
   const crumbHtml = crumb === null
     ? ''
-    : `\n      <li class="breadcrumb__item"><a href="${p}${crumb.href}">${crumb.label}</a></li>`;
+    : `\n      <li class="breadcrumb__item"><a href="${crumb.href}">${crumb.label}</a></li>`;
 
   return `<!DOCTYPE html>
 <html lang="ko">

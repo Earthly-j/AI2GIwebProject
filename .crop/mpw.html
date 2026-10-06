@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><style>body{margin:0}</style></head><body>
+<iframe id="f" src="../종합현황/dashboard.html" style="width:1440px;height:420px;border:0" scrolling="no"></iframe>
+<script>
+document.getElementById("f").onload=function(){
+  const d=this.contentDocument;
+  const items=d.querySelectorAll(".main-nav__item");
+  if(items[2]){
+    items[2].style.background="#107a77";
+    const sub=items[2].querySelector(".main-nav__submenu");
+    if(sub) sub.style.display="block";
+  }
+};
+</script></body></html>
