@@ -30,8 +30,11 @@ const PAGE_BY_LABEL = {
   '노데이터 확인':          '종합현황/nodata.html',
   '보관현황':               '종합현황/storage.html',
 
-  // 마이페이지 (단독 항목)
+  // 마이페이지
   '마이페이지':             '마이페이지/mypage.html',
+  '계정관리':               '마이페이지/account.html',
+  '결제방법':               '마이페이지/payment.html',
+  '주소관리':               '마이페이지/address.html',
 
   // 구매대행 — 주문서 작성 화면은 배송대행과 같은 폼을 씁니다
   '재고구매신청등록':       '구매대행/stock_order.html',
@@ -53,12 +56,6 @@ const PAGE_BY_LABEL = {
 const ORDER_FORM_BY_ITEM = {
   '구매대행': '구매대행/order_form.html',
   '배송대행': '배송대행/order_form.html',
-};
-
-// Top-level items that are a page in themselves (no submenu).
-// Without this their link would fall back to '#' and never navigate.
-const SELF_PAGE_BY_ITEM = {
-  '마이페이지': '마이페이지/mypage.html',
 };
 
 // Top-level items whose first submenu entry is not their landing page.
@@ -112,13 +109,12 @@ function buildNav({ depth, current }) {
   const li = ITEMS.map(({ name, subs }) => {
     const isCurrent = current !== null && name === current;
     const orderForm = ORDER_FORM_BY_ITEM[name];
-    const selfPage = SELF_PAGE_BY_ITEM[name];
     const houseHref = subs.length
       ? (ORDER_FORM_BY_ITEM[name]
          || TOP_LINK_BY_ITEM[name]
          || PAGE_BY_LABEL[subs[0]]
          || '#')
-      : (selfPage || '#');
+      : '#';
 
     const submenu = subs.length
       ? '\n          <ul class="main-nav__submenu">\n'
