@@ -1,0 +1,13 @@
+{
+    // kurologi-web 은 javax.servlet 프로젝트 → Tomcat 9 필수 (Tomcat 10+ 는 jakarta)
+    "tomcat.home": "/Users/jason/Downloads/apache-tomcat-9.0.100",
+    "tomcat.homes": [
+        "/Users/jason/Downloads/apache-tomcat-9.0.100"
+    ],
+    "tomcat.javaHome": "/Users/jason/Library/Java/JavaVirtualMachines/amazon-corretto-25.jdk/Contents/Home",
+    "tomcat.buildType": "Local",
+    "tomcat.port": 8080,
+    "chat.hookFilesLocations": {
+        "workbench.sideBar.location": true
+    }
+}

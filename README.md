@@ -6,7 +6,7 @@
 
 **한 페이지, 한 CSS, 데스크톱 전용.** 미디어쿼리 없음.
 
-## 전체 페이지 (16개)
+## 전체 페이지 (26개) — 모든 메뉴가 실제 페이지입니다
 
 | 파일 | 화면 |
 |---|---|
@@ -128,21 +128,84 @@ node tools/sync-nav.mjs
 - 상단 항목을 누르면 그 항목의 첫 페이지로 이동하게 연결
 - 홈페이지 메뉴가 예상(6개 항목)과 다르면 **에러를 내고 멈춤**
 
+## 페이지 구조 — CSS 인라인 (외부 CSS 파일 없음)
+
+**각 HTML이 자기 스타일을 직접 품고 있습니다.** `<link href="...css">` 가 아니라
+`<head>` 안의 `<style>` 블록입니다.
+
+- 26개 페이지 모두 **자기 완결형** — HTML 파일 하나만 있으면 화면이 나옵니다
+- CSS 경로가 깨져도 스타일이 유지됩니다
+- 파일 하나를 다른 곳에 복사해도 그대로 동작합니다
+
+```html
+<head>
+  ...
+  <link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet">
+  <style>
+  /* inlined from 종합현황/dashboard.css */
+  :root { --teal: #159692; ... }
+  ...
+  </style>
+</head>
+```
+
+> **폰트 링크만 외부로 남아 있습니다.** `Noto Sans KR` 과 `Lato` 는 구글이
+> 제공하는 웹폰트이고, 이걸 인라인하면 폰트 자체를 파일에 넣어야 해서
+> 용량이 크게 늘고 갱신도 안 됩니다.
+
+### 다시 만들기
+
+CSS를 고쳤다면 다시 인라인해야 합니다:
+
+```bash
+node tools/inline-css.mjs --check   # 무엇이 바뀔지 먼저 확인
+node tools/inline-css.mjs           # 실제 적용
+```
+
+이미 인라인된 페이지는 알아서 건너뜁니다. CSS 원본 파일은 그대로 남아 있으니,
+수정은 CSS에서 하고 다시 인라인하면 됩니다.
+
+### 색상 바꾸기
+
+색은 `종합현황/dashboard.css` 맨 위 `:root` 에 모여 있습니다 (`--teal`, `--blue`,
+`--red`, `--container`, `--gutter` 등).
+
+> ⚠️ 이 파일은 **공통 뼈대(상단바·헤더·페이지 제목·푸터)의 유일한 원본**입니다.
+> `tools/lib-chrome.mjs` 등 3개 스크립트가 이 파일을 읽어 모든 페이지의
+> 뼈대를 만듭니다. 지우면 페이지를 다시 생성할 수 없습니다.
+>
+> 나머지 CSS 파일들은 HTML 안으로 인라인된 뒤 삭제했습니다.
+
+### 점검 도구
+
+```bash
+node tools/audit-pages.mjs     # 페이지별 인라인 CSS 가 온전한지
+node tools/check-classes.mjs   # 마크업 클래스에 CSS 규칙이 다 있는지
+node tools/inline-css.mjs --check  # 인라인 안 된 페이지가 있는지
+node tools/compare-render.mjs  # figma-export 기준선과 픽셀 비교
+```
+
+---
+
 ## 파일
 
 | 파일 | 설명 |
 |---|---|
-| `index.html` | 홈페이지 마크업 + 탭·팝업용 자바스크립트 (약 40줄) |
-| `css/style.css` | 홈페이지 스타일 |
+| `index.html` | 홈페이지 (CSS 인라인 포함) |
+| `종합현황/dashboard.css` | 공통 뼈대 CSS 원본 (도구가 사용 — 삭제 금지) |
 | `images/` | 실제 이미지 (로고, 배너, 센터 아이콘, 은행 로고, 카톡 버튼) |
+| `figma-export/` | 26개 페이지 전체 캡처 (Figma용) |
+| `tools/inline-css.mjs` | CSS를 HTML 안으로 인라인 |
+| `tools/audit-pages.mjs` | 인라인 CSS 누락 점검 |
+| `tools/check-classes.mjs` | 마크업 클래스 ↔ CSS 규칙 대조 |
+| `tools/compare-render.mjs` | 기준선 이미지와 렌더 비교 |
 | `tools/sync-nav.mjs` | 주 메뉴를 26개 페이지에 동일하게 적용 |
-| `tools/lib-chrome.mjs` | 모든 내부 페이지의 공통 뼈대 (상단바·헤더·제목·푸터) |
-| `tools/build-remaining.mjs` | 메뉴 10개 페이지 생성 (통관불가·메뉴얼·트래킹·보관·재고·커뮤니티) |
+| `tools/lib-chrome.mjs` | 모든 내부 페이지의 공통 뼈대 생성 |
+| `tools/figma-export.mjs` | 26개 페이지 전체 캡처 (Figma용) |
+| `tools/build-remaining.mjs` | 메뉴 10개 페이지 생성 |
 | `tools/build-mypage.mjs` | 마이페이지 생성 (종합현황에서 섹션 분리 + 관리 메뉴 3개) |
 | `tools/build-mypage-sub.mjs` | 계정관리·결제방법·주소관리 3개 페이지 생성 |
 | `tools/build-forms.mjs` | 구매대행·배송대행 4개 페이지 생성 |
-| `tools/build-pages.mjs` | 서비스안내 5개 페이지 생성 |
-| `tools/compare-styles.mjs` | 원본 사이트와 스타일 비교 |
 | `tools/png-sample.mjs` | PNG 특정 좌표 색상 추출 |
 
 ## 클래스 이름 규칙
@@ -155,9 +218,9 @@ card__body      카드 안쪽 여백 영역
 card--pad       위아래 20px 여백을 더 주는 변형
 ```
 
-## 색상과 폭 바꾸기
+## 색상과 폭
 
-각 CSS 파일 맨 위 `:root` 한 곳만 고치면 전체 톤이 바뀝니다:
+`종합현황/dashboard.css` 맨 위 `:root` 한 곳에 모여 있습니다:
 
 ```css
 :root {
@@ -169,28 +232,35 @@ card--pad       위아래 20px 여백을 더 주는 변형
 }
 ```
 
+이 파일의 값을 바꾸면 새로 생성되는 페이지에 반영됩니다. 이미 만들어진
+26개 페이지는 각자 `<style>` 안에 색을 복사해 가지고 있으므로, 색을 바꾸려면
+해당 페이지의 `<style>` 도 함께 고쳐야 합니다.
+
 ## 검증
 
-`tools/compare-styles.mjs` 가 원본 사이트와 이 페이지를 헤드리스 크롬으로 각각
-열고, 같은 요소의 **계산된 스타일**을 읽어 비교합니다.
+현재 점검 도구 4개가 모두 통과합니다:
 
 ```bash
-node tools/compare-styles.mjs
+node tools/audit-pages.mjs      # 페이지별 인라인 CSS 온전성
+node tools/check-classes.mjs    # 마크업 클래스 ↔ CSS 규칙 대조
+node tools/compare-render.mjs   # figma-export 기준선과 픽셀 비교
+node tools/inline-css.mjs --check  # 인라인 안 된 페이지 확인
 ```
 
-- 홈페이지: **98.9% 일치** (88개 속성 중 1개만 다름 — 센터 현황 표 `paddingTop`)
-- 서비스안내 5개 페이지: 색상 픽셀 검증 완료
-- 종합현황·노데이터: 색상 픽셀 검증 완료 (탭 `#ff7000`/`#6441be`/`#37b149`/`#2e6fe5`)
-- 구매대행·배송대행: 색상 픽셀 검증 완료 (머리글 `#e4f0f9`, 버튼 `#1e3354`)
+결과:
 
-구조 검사 (26개 HTML 전부):
-
-- 태그 짝 일치 (`div`, `table`, `tr`, `ul`, `li`, `p`, `span` 등)
-- CSS 26개 파일 중괄호 균형
-- 로컬 경로 전부 존재, 깨진 링크 **0개**
+- 26개 페이지 모두 **외부 CSS 링크 0개**, CSS 인라인 완료
+- 마크업이 쓰는 모든 클래스에 CSS 규칙 존재 (규칙 없는 클래스 0개)
+- 태그 짝 일치 · 깨진 로컬 경로 **0개**
 - 주 메뉴 6개 항목 · 서브메뉴 **6개** · **nav `#` 링크 0개**
-- **마이페이지 드롭다운 = 4개 (마이페이지·계정관리·결제방법·주소관리), 끊긴 링크 없음**
-- 삭제한 메뉴(재고관리·출고관리·정산관리·예치금충전) 잔여 없음
+- **마이페이지 드롭다운 = 4개 (마이페이지·계정관리·결제방법·주소관리)** — 26개 페이지 전부
+
+색상은 원본 사이트에서 픽셀 단위로 추출해 검증했습니다:
+
+- 홈페이지: 계산된 스타일 **98.9% 일치**
+- 서비스안내: 표 머리글 `#f4fafa`, 상단선 `#107976`
+- 종합현황: 탭 `#ff7000`/`#6441be`/`#37b149`/`#2e6fe5`
+- 구매대행·배송대행: 머리글 `#e4f0f9`, 버튼 `#1e3354`
 
 브라우저에서 렌더링과 마이페이지 드롭다운이 열리는 것까지 확인했습니다.
 
