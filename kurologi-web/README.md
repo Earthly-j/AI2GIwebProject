@@ -13,9 +13,17 @@
 ## 실행 (Eclipse)
 
 1. File → Import → General → **Existing Projects into Workspace** → `kurologi-web` 폴더
-2. 프로젝트 우클릭 → Properties → Targeted Runtimes → **apache-tomcat-9.0.100** 체크
-3. 프로젝트 우클릭 → Run As → **Run on Server** → Tomcat v9.0
-4. http://localhost:8080/kurologi/ → 로그인 상자에 **user_id / demo1234**
+2. 프로젝트 우클릭 → Run As → **Run on Server** → Tomcat v9.0
+3. http://localhost:8080/kurologi/ → 로그인 상자에 **user_id / demo1234**
+
+Maven 은 쓰지 않습니다. 컴파일용 servlet/jsp API 는 `lib/` 의 jar (Tomcat 9 의 `lib/` 에서 복사)
+— `.classpath` 가 이 jar 를 가리키므로 Eclipse 와 VS Code 둘 다 같은 설정으로 동작합니다.
+`lib/` 는 `WEB-INF/lib` 가 아니라서 배포되지 않습니다 (Tomcat 이 제공).
+
+## 실행 (VS Code)
+
+Tomcat 확장(Al-rimi.tomcat) — `.vscode/settings.json` 에 설정되어 있습니다 (`tomcat.buildType: Local`).
+주소는 http://localhost:8080/kurologi-web/ 입니다. Eclipse 와 같은 8080 포트라 **동시에 실행하지 마세요.**
 
 개발 중 매번 로그인하기 귀찮으면 `web.xml` 의 `kurologi.devAutoLogin` 을 `true` 로.
 
