@@ -1,5 +1,5 @@
 package jp.kurologi.model;
-
+/**수정*/
 /** 회원등급 — 서비스안내/info_grade.html (2026.03.30 개정) 기준. */
 public enum Grade {
     BASIC("베이직(Basic)"),
