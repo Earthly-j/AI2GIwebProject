@@ -1,5 +1,7 @@
 package jp.kurologi.web;
 
+//수정
+
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.HexFormat;
