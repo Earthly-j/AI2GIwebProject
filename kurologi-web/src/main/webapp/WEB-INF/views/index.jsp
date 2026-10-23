@@ -944,7 +944,7 @@ button { font: inherit; cursor: pointer; }
     <nav class="main-nav">
       <ul class="main-nav__list">
         <li class="main-nav__item">
-          <a href="<%= ctx %>/service/info_company">서비스   ㅇㄹㄴㅇㄹ안내</a>
+          <a href="<%= ctx %>/service/info_company">서비스 안내</a>
           <ul class="main-nav__submenu">
             <li><a href="<%= ctx %>/service/info_company">KURO Logi 소개</a></li>
             <li><a href="<%= ctx %>/service/info_grade">회원등급, 수수료 안내</a></li>
