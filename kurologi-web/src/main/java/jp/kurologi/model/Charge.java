@@ -3,7 +3,7 @@ package jp.kurologi.model;
 import java.time.LocalDateTime;
 
 import jp.kurologi.web.Formats;
-
+/**카나데*/
 /** 결제 대기건 1개 (배송비 · 관부가세 · 추가 결제 · 보관료 …). */
 public class Charge {
 
