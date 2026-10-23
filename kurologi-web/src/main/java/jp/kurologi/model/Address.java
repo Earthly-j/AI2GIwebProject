@@ -1,5 +1,5 @@
 package jp.kurologi.model;
-/**11232323*/
+/**1123232ㄴㅇㄹㄴㅇㄹ3*/
 /** 나의 주소록 — 받는 사람(한국) 주소. */
 public class Address {
 
