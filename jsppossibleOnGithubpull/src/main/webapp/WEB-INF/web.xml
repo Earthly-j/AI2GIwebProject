@@ -6,8 +6,8 @@
 
   <display-name>KURO Logi</display-name>
 
-  <request-character-encoding>UTF-8</request-character-encoding>
-  <response-character-encoding>UTF-8</response-character-encoding>
+  
+ 
 
   <!-- true 면 로그인 없이 데모 회원(user_id)으로 자동 로그인 — 개발용. 데모 계정: user_id / demo1234 -->
   <context-param>
