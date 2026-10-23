@@ -1,7 +1,7 @@
 package jp.kurologi.model;
 
 import java.util.List;
-/**수정6*/
+/**ㄴㄷㄹㄴㅇㄹㄴ수정6*/
 /** 일본 사서함(센터) 주소 — 회원 공통, 사서함번호·수취인만 회원마다 다릅니다. */
 public record MailboxCenter(String name, String zipcode, String address, String phone) {
 
