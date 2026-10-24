@@ -826,6 +826,8 @@ button { font: inherit; cursor: pointer; }
 /* JSP — 로그인 상자 안내 */
 .login-message { margin: 0 0 10px; padding: 8px 10px; font-size: 13px; color: #8a1f11; background: #fdecea; border-radius: 4px; }
 .login-welcome { margin: 0 0 14px; font-size: 14px; line-height: 1.8; color: #333; }
+.topbar__welcome { display: block; padding: 0 12px 0 20px; height: 44px; line-height: 44px; font-size: 13px; color: #444; white-space: nowrap; }
+.topbar__welcome strong { color: #159692; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -919,12 +921,16 @@ button { font: inherit; cursor: pointer; }
       <li><a class="kakao-btn" href="#"><img src="<%= ctx %>/images/air_kakao.png" alt="카톡상담"></a></li>
       <li><a class="kakao-btn" href="#"><img src="<%= ctx %>/images/kakao_sea1.png" alt="카톡상담"></a></li>
       <li><a class="kakao-btn" href="#"><img src="<%= ctx %>/images/kakao_sea2.png" alt="카톡상담"></a></li>
-<%  if (member != null) { %>
-      <li><a href="<%= ctx %>/mypage"><%= Html.esc(member.getName()) %>님</a></li>
+<%  boolean topIn = member != null || Session.memberId(request) != null;
+    String topName = member != null ? member.getName() : (String) session.getAttribute("loginMemberName");
+    if (topName == null || topName.trim().isEmpty()) topName = "회원";
+    if (topIn) { %>
+      <li><span class="topbar__welcome"><strong><%= Html.esc(topName) %></strong>님 환영합니다.</span></li>
       <li><a href="<%= ctx %>/logout">로그아웃</a></li>
+      <li><a href="<%= ctx %>/mypage">마이페이지</a></li>
 <%  } else { %>
-      <li><a href="#loginForm">로그인</a></li>
-      <li><a href="#">회원가입</a></li>
+      <li><a href="<%= ctx %>/member/login">로그인</a></li>
+      <li><a href="<%= ctx %>/member/join">회원가입</a></li>
 <%  } %>
     </ul>
 
@@ -1041,8 +1047,8 @@ button { font: inherit; cursor: pointer; }
                 <button class="btn btn--primary btn--block" type="submit">로그인</button>
                 <label class="checkbox"><input type="checkbox" name="saveId" value="Y" tabindex="-1"<%= Html.checked(savedId != null) %>> 아이디저장</label>
                 <div class="btn-row btn-row--split">
-                  <a class="btn btn--dark" href="#">회원가입</a>
-                  <a class="btn btn--dark" href="#">ID/PW 찾기</a>
+                  <a class="btn btn--dark" href="${pageContext.request.contextPath}/member/join">회원가입</a>
+                  <a class="btn btn--dark" href="${pageContext.request.contextPath}/member/find/id">ID/pw 찾기</a>
                 </div>
               </form>
 <%  } else { %>
@@ -1355,8 +1361,19 @@ button { font: inherit; cursor: pointer; }
   document.querySelectorAll('[data-close-popup]').forEach(function (el) {
     el.addEventListener('click', function () { popup.classList.add('is-hidden'); });
   });
+  /* 일주일 동안 보지 않기 */
+  var HIDE_KEY = 'kuroPopupHideUntil';
+  try {
+    var until = parseInt(localStorage.getItem(HIDE_KEY), 10);
+    if (until && until > Date.now()) popup.classList.add('is-hidden');
+    else if (until) localStorage.removeItem(HIDE_KEY);
+  } catch (err) {}
+
   popup.querySelector('.popup__mute input').addEventListener('change', function (e) {
-   if (e.target.checked) popup.classList.add('is-hidden');
+    if (e.target.checked) {
+      try { localStorage.setItem(HIDE_KEY, String(Date.now() + 7 * 24 * 60 * 60 * 1000)); } catch (err) {}
+      popup.classList.add('is-hidden');
+    }
   });
 })();
 </script>

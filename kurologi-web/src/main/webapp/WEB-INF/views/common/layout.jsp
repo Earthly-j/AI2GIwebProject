@@ -1,3 +1,5 @@
+
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="jp.kurologi.model.Member" %>
 <%@ page import="jp.kurologi.web.Html" %>
@@ -15,14 +17,27 @@
 
   호출하는 페이지가 request 에 menu 를 넣어 둡니다 (현재 메뉴 표시).
   member, unpaidCount 는 BaseServlet.render() 가 넣어 둡니다 (summary).
+
+  [수정] top : 로그인하면 우측 상단이  "OOO님 환영합니다.  로그아웃  마이페이지"  로 바뀝니다.
+         이름은 request 의 member 가 있으면 그 이름, 없으면 로그인할 때 세션에 넣어 둔 loginMemberName 을 씁니다.
 --%>
 <%
     String ctx = request.getContextPath();
     String part = request.getParameter("part");
     String menu = (String) request.getAttribute("menu");      // service | status | mypage | buy | ship | community
     boolean loggedIn = Session.memberId(request) != null;
+
+    // 상단 바에 찍을 로그인 회원 이름 (summary 부분의 변수 member 와 이름이 겹치지 않게 topMember 로 씀)
+    Member topMember = (Member) request.getAttribute("member");
+    String topName = topMember != null ? topMember.getName() : (String) session.getAttribute("loginMemberName");
+    if (topName == null || topName.trim().isEmpty()) topName = "회원";
 %>
 <%  if ("top".equals(part)) { %>
+<style>
+/* 로그인 후 상단 바 : "OOO님 환영합니다." (각 페이지 CSS 를 고치지 않도록 여기에 둠) */
+.topbar__welcome { display: block; padding: 0 12px 0 20px; height: 44px; line-height: 44px; font-size: 13px; color: #444; white-space: nowrap; }
+.topbar__welcome strong { color: #159692; font-weight: 700; }
+</style>
 <div class="topbar">
   <div class="container topbar__inner">
     <ul class="topbar__links topbar__links--left">
@@ -36,10 +51,12 @@
       <li><a class="kakao-btn" href="#"><img src="<%= ctx %>/images/kakao_sea1.png" alt="카톡상담"></a></li>
       <li><a class="kakao-btn" href="#"><img src="<%= ctx %>/images/kakao_sea2.png" alt="카톡상담"></a></li>
 <%  if (loggedIn) { %>
+      <li><span class="topbar__welcome"><strong><%= Html.esc(topName) %></strong>님 환영합니다.</span></li>
       <li><a href="<%= ctx %>/logout">로그아웃</a></li>
+      <li><a href="<%= ctx %>/mypage">마이페이지</a></li>
 <%  } else { %>
-      <li><a href="<%= ctx %>/#loginForm">로그인</a></li>
-      <li><a href="#">회원가입</a></li>
+      <li><a href="<%= ctx %>/member/login">로그인</a></li>
+      <li><a href="<%= ctx %>/member/join">회원가입</a></li>
 <%  } %>
     </ul>
   </div>
